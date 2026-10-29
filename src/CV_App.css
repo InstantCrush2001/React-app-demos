@@ -1,0 +1,65 @@
+.cv-container {
+    max-width: 400px;
+    font-family: "Georgia", serif;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.cv-container h1 {
+    color: rgb(95, 173, 0);
+    text-align: center;
+}
+
+.cv-container h2 {
+    color: rgb(3, 192, 22);
+    font-size: medium;
+    text-align: right;
+}
+
+.container label {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.5rem 0;
+    text-align: left;
+}
+
+.container input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.3rem;
+    
+}
+
+button {
+    padding: 0.5rem ;
+    margin: 1rem;
+    font-weight: bold;
+    align-self: center;
+    cursor: pointer;
+    font-family: "Georgia", serif;
+    font-size: large;
+    background-color: greenyellow;
+    color: rgb(0, 90, 3);
+    border-radius: 10px;
+    
+}
+
+.container legend {
+    color: rgb(20, 118, 30);
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.sections {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.cv-container fieldset {
+    margin: 0 0 10px 0;
+    border-radius: 10px;
+}
