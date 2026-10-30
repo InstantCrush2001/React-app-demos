@@ -1,8 +1,8 @@
 // Proyecto 2 - Pokemon Memory Game
 
 import { useState, useEffect } from "react";
-import Card from "./P3_Components/card";
-import Score from "./P3_Components/scoreboard";
+import Card from "./Components/card";
+import Score from "./Components/scoreboard";
 
 function ResetButton({onResetClicked}){
     return (
