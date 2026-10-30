@@ -1,7 +1,7 @@
-export default function Card({name, image, onCardClicked}){
+export default function Card({name, image, hasWon, onCardClicked}){
     return (
-    <button onClick={onCardClicked}>
-        <img src={image}/>
+    <button onClick={onCardClicked} disabled={hasWon}>
+        <img className="card-img" src={image}/>
         <span>{name}</span>
     </button>
         );

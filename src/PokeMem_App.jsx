@@ -3,23 +3,13 @@
 import { useState, useEffect } from "react";
 import Card from "./P3_Components/card";
 import Score from "./P3_Components/scoreboard";
-import logo from "./assets/react.svg";
 
-let poke = [
-        {id: 1, tag: "Pikachu", img: logo },
-        {id: 2, tag: "Charizard", img: logo },
-        {id: 3, tag: "Blastoise", img: logo },
-        {id: 4, tag: "Venusaur", img: logo },
-        {id: 5, tag: "Mewtwo", img: logo },
-        {id: 6, tag: "Articuno", img: logo },
-        {id: 7, tag: "Zapdos", img: logo },
-        {id: 8, tag: "Moltres", img: logo },
-        {id: 9, tag: "Machamp", img: logo },
-        {id: 10, tag: "Koffing", img: logo },
-        {id: 11, tag: "Diglett", img: logo },
-        {id: 12, tag: "Ditto", img: logo },
-    ];
-
+function ResetButton({onResetClicked}){
+    return (
+    <button onClick = {onResetClicked} >
+        <span>Try Again</span>
+    </button>)
+}
 
 function shuffle(cards){
     // Implementación del algoritmo Fisher-Yates
@@ -37,11 +27,28 @@ function shuffle(cards){
     return copyCards;
 }
 
+function fetchData(url){
+    return fetch(url)
+    .then(res => res.json())
+    .then(data => ({
+        id: data.id, 
+        tag: data.name, 
+        img: data.sprites.other.home.front_default
+    }));
+}
+
 export default function PokeApp(){
 
-    const [cards, setCards] = useState(poke)
+    const [cards, setCards] = useState([])
     const [clickedCards, setClickedCards] = useState([])
     const [bestScore, setBestScore] = useState(0)
+    const [hasWon, setHasWon] = useState(false); 
+
+    useEffect(() => {
+        const urls = Array.from({ length: 12 }, (_, i) => "https://pokeapi.co/api/v2/pokemon/" + (i + 1))
+        Promise.all(urls.map(fetchData))
+            .then(pokemons => setCards(shuffle(pokemons)));
+        }, []);
 
     function handleClick(id){
         
@@ -53,17 +60,40 @@ export default function PokeApp(){
             if (newScore > bestScore){
                 setBestScore(newScore)
             }
+            if (newScore === cards.length ) {                   
+                setHasWon( true );
+            }
         }
         setCards(prev => shuffle(prev));
     }
 
+    function handleReset(){
+        setHasWon(false);
+        setClickedCards([]);
+        setCards(prev => shuffle(prev));
+    }
 
+    if (cards.length === 0){
+        return <p>Cargando...</p>;
+    }
     return(
         <div>
+            <div>
+            <h1>Poke-Memory</h1>
+            <h2>By El empinado 29/10/26</h2>
+            </div>
             <Score score={clickedCards.length} best={bestScore}/>
+            <div className="cards">
             {cards.map(({id, tag, img}) => (
-                <Card key= {id} name={tag} image={img} onCardClicked={() => handleClick(id)}/>
+                <Card key= {id} name={tag} image={img} hasWon= {hasWon} onCardClicked={() => handleClick(id)}/>
             ))}
+            </div>
+            {hasWon && (
+            <div>
+                <h1 className="score">Victory!!!</h1> 
+                <ResetButton onResetClicked = {handleReset}/>
+            </div>
+            )}
         </div>
     );
 }
