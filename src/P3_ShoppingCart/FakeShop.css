@@ -1,0 +1,12 @@
+.product-img {
+  width: 120px;
+  height: auto;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
